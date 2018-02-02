@@ -1,0 +1,93 @@
+---
+  - hosts: all
+    become: yes
+    tasks:
+      - name: Update apt cache
+        apt: update_cache=yes cache_valid_time=3600
+
+  - hosts: nodo1
+    become: yes
+    tasks:
+      - name: Install services nodo1
+        apt: name={{item}}
+        with_items:
+          - mariadb-server
+          - bind9
+          - python-mysqldb
+
+      - name: Create MariaDB configuration file
+        copy: src=./static/etc/mysql/mariadb.conf.d/50-server.cnf dest=/etc/mysql/mariadb.conf.d/50-server.cnf
+
+      - name: Restart MariaDB
+        systemd:
+          name: mariadb
+          state: restarted
+
+      - name: Create MariaDB database
+        mysql_db:
+          name: wordpress
+          state: present
+
+      - name: Create MariaDB user with privileges on wordpress database
+        mysql_user:
+          name: wordpress
+          password: '*C260A4F79FA905AF65142FFE0B9A14FE0E1519CC'
+          encrypted: yes
+          priv: 'wordpress.*:ALL'
+          host: '%'
+
+      - name: Bind9 configuration
+        copy: src=./static/etc/nodo1.resolv.conf dest=/etc/resolv.conf
+
+      - name: Bind9 configuration2
+        copy: src=./static/etc/bind/named.conf.local dest=/etc/bind/named.conf.local
+
+      - name: Bind9 configuration3
+        template: src=var/cache/bind/ansible.tinoco dest=/var/cache/bind/ansible.tinoco
+
+      - name: Restart Bind9
+        systemd:
+          name: bind9
+          state: restarted
+
+
+  - hosts: nodo2
+    become: yes
+    tasks:
+      - name: Install service nodo2
+        apt: name={{item}}
+        with_items:
+          - nginx
+          - php7.0
+          - php7.0-fpm
+          - php-mysql
+          - wget
+
+      - name: DNS server
+        template: src=etc/nodo2.resolv.conf dest=/etc/resolv.conf
+
+      - name: Nginx configuration
+        copy: src=./static/etc/nginx/sites-enabled/default dest=/etc/nginx/sites-enabled/default
+
+      - name: Restart nginx
+        systemd:
+          name: nginx
+          state: restarted
+
+      - name: Extract wordpress
+        unarchive:
+          src: http://wordpress.org/latest.tar.gz
+          dest: /var/www/html/
+          remote_src: yes
+
+      - name: Get wordpress salt
+        local_action: command curl https://api.wordpress.org/secret-key/1.1/salt/
+        register: "wp_salt"
+        become: no
+        become_method: sudo
+
+      - name: Copy wordpress configuration
+        template: src=var/www/html/wordpress/wp-config.php dest=/var/www/html/wordpress/wp-config.php
+
+      - name: Change wordpress owner
+        file: path=/var/www/html/wordpress/ owner=www-data group=www-data state=directory recurse=yes

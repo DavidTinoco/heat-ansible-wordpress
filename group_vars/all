@@ -1,0 +1,13 @@
+wp_db_name: wordpress
+wp_db_user: wordpress
+wp_db_password: wordpress
+wp_db_host: mariadb.ansible.tinoco
+
+server_hostname: wordpress.ansible.tinoco
+
+auto_up_disable: false
+
+core_update_level: true
+
+ip_nodo1: 172.22.200.70
+ip_nodo2: 172.22.200.79

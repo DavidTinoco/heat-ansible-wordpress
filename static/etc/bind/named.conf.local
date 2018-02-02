@@ -1,0 +1,6 @@
+zone "ansible.tinoco" {
+	type master;
+	file "/var/cache/bind/ansible.tinoco";
+	forwarders {
+	};
+};
