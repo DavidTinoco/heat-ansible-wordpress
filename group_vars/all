@@ -11,3 +11,9 @@ core_update_level: true
 
 ip_nodo1: 172.22.200.70
 ip_nodo2: 172.22.200.79
+
+wp_core_url: wordpress.ansible.tinoco
+wp_core_title: Ansible
+wp_core_admin_user: admin
+wp_core_admin_pass: admin
+wp_core_admin_mail: admin@ansible.tinoco
