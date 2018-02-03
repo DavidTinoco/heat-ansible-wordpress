@@ -96,4 +96,4 @@
         get_url: url=https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar dest=/usr/local/bin/wp mode=a+x
 
       - name: Configure site
-        shell: sudo -u debian -i -- wp core install --url={{ wp_core_url }} --title={{ wp_core_title }} --admin_user={{ wp_core_admin_user }} --admin_password={{ wp_core_admin_pass }} --admin_email={{ wp_core_admin_mail}} --path=/var/www/html/wordpress
+        shell: sudo -u debian -i -- wp core install --url={{ ip_nodo2 }} --title={{ wp_core_title }} --admin_user={{ wp_core_admin_user }} --admin_password={{ wp_core_admin_pass }} --admin_email={{ wp_core_admin_mail }} --path=/var/www/html/wordpress

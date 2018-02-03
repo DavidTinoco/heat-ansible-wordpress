@@ -1,0 +1,60 @@
+heat_template_version: newton
+
+parameters:
+  key_name:
+    type: string
+    default: "jupiter"
+
+  flavor:
+    type: string
+    default: "m1.mini"
+
+  net:
+    type: string
+    default: "red de david.tinoco"
+
+  image:
+    type: string
+    default: "Debian Stretch 9.1"
+
+resources:
+  ip1:
+    type: OS::Nova::FloatingIP
+    properties:
+      pool: ext-net
+  ip2:
+    type: OS::Nova::FloatingIP
+    properties:
+      pool: ext-net
+
+  nodo1:
+    type: OS::Nova::Server
+    properties:
+      name: "nodo1"
+      key_name: { get_param: key_name }
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      networks:
+        - network: { get_param: net}
+
+  nodo2:
+    type: OS::Nova::Server
+    properties:
+      name: "nodo2"
+      key_name: { get_param: key_name }
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      networks:
+        - network: { get_param: net}
+
+  associateip1:
+    type: OS::Nova::FloatingIPAssociation
+    properties:
+      floating_ip: { get_resource: ip1 }
+      server_id: { get_resource: nodo1 }
+
+  associateip2:
+    type: OS::Nova::FloatingIPAssociation
+    properties:
+      floating_ip: { get_resource: ip2 }
+      server_id: { get_resource: nodo2 }
