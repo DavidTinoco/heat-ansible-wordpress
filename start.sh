@@ -29,8 +29,8 @@ echo 'Launch ansible-playbook to deploy wordpress'
 
 ansible-playbook main.yml
 
-sed -i -e "s/$ipnodo1/ipnodo1/g" ./hosts.cfg
-sed -i -e "s/$ipnodo2/ipnodo2/g" ./hosts.cfg
+sed -i -e "s/$ipnodo1/ipnodo1/g" ./hosts.ini
+sed -i -e "s/$ipnodo2/ipnodo2/g" ./hosts.ini
 sed -i -e "s/$ipnodo1/ipnodo1/g" ./group_vars/all
 sed -i -e "s/$ipnodo2/ipnodo2/g" ./group_vars/all
 
