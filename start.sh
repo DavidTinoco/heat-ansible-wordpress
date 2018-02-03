@@ -27,7 +27,7 @@ ipnodo2=$ip
 
 echo 'Launch ansible-playbook to deploy wordpress'
 
-ansible-playbook -i hosts.cfg main.yml
+ansible-playbook main.yml
 
 sed -i -e "s/$ipnodo1/ipnodo1/g" ./hosts.cfg
 sed -i -e "s/$ipnodo2/ipnodo2/g" ./hosts.cfg
