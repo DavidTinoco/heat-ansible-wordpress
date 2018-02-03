@@ -4,7 +4,7 @@
 # Author: David Tinoco Castillo
 # Version 0.1
 
- openstack stack create -t ./heat/deploy.yml ansible --parameter "flavor=m1.mini" --parameter "image=Debian Stretch 9.1" --parameter "key_name=jupiter" --parameter "net=red de david.tinoco"
+openstack stack create -t ./heat/deploy.yml ansible --parameter "flavor=m1.mini" --parameter "image=Debian Stretch 9.1" --parameter "key_name=jupiter" --parameter "net=red de david.tinoco"
 
 ip=' '
 
@@ -35,5 +35,5 @@ sed -i -e "s/$ipnodo1/ipnodo1/g" ./group_vars/all
 sed -i -e "s/$ipnodo2/ipnodo2/g" ./group_vars/all
 
 echo "Make in /etc/resolv.conf this ip, $ipnodo1, as first nameserver"
-echo "And now, you can access to wordpress.ansible.tinoco"
+echo "And now, you can access to http://wordpress.ansible.tinoco"
 echo 'When you wanna remove all, execute "openstack stack delete ansible -y"'
