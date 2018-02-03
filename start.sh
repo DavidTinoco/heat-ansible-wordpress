@@ -34,5 +34,6 @@ sed -i -e "s/$ipnodo2/ipnodo2/g" ./hosts.cfg
 sed -i -e "s/$ipnodo1/ipnodo1/g" ./group_vars/all
 sed -i -e "s/$ipnodo2/ipnodo2/g" ./group_vars/all
 
-echo "Go to $ipnodo2 to access to the wordpress site"
+echo "Make in /etc/resolv.conf this ip, $ipnodo1, as first nameserver"
+echo "And now, you can access to wordpress.ansible.tinoco"
 echo 'When you wanna remove all, execute "openstack stack delete ansible -y"'
