@@ -13,7 +13,7 @@ function get_ip() {
     ip=`openstack server list | grep $1 | cut -d '|' -f 5 | cut -d ',' -f 2 | cut -d ' ' -f 2`
     sleep 2
   done
-  sed -i -e "s/ip$1/`openstack server list | grep $1 | cut -d '|' -f 5 | cut -d ',' -f 2 | cut -d ' ' -f 2`/g" ./hosts.cfg
+  sed -i -e "s/ip$1/`openstack server list | grep $1 | cut -d '|' -f 5 | cut -d ',' -f 2 | cut -d ' ' -f 2`/g" ./hosts.ini
   sed -i -e "s/ip$1/`openstack server list | grep $1 | cut -d '|' -f 5 | cut -d ',' -f 2 | cut -d ' ' -f 2`/g" ./group_vars/all
 }
 
